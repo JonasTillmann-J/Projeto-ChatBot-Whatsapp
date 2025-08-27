@@ -19,4 +19,7 @@ rad.json
 #License-file
 *.flf
 #Test results file
+
 TestResults.xml
+Leia_me_antes_de_começar.txt
+.env
