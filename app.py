@@ -4,14 +4,10 @@ from Utils.parser import parse_webhook_message
 app = Flask(__name__)
 
 @app.route("/webhook", methods=["POST"])
-
 def webhook():
+    try:
+        mensagem, status = parse_webhook_message(request)
+    except Exception as e:
+        print(f"Ouve algum erro de execução em : app.py : parse_webhook_message{e}")
 
-    mensagem, status = parse_webhook_message(request)
-
-    if mensagem.get("status") == 'mensagem processada':
-        return jsonify(mensagem), status
-    else:
-        return jsonify(mensagem), status
-
-if __name__ == "__main__": app.run(port=5000, debug=True)
+if __name__ == "__main__": app.run(port=5000, debug=True)   

@@ -1,4 +1,9 @@
-Estou sendo construido ainda por favor espere um pouco
+Estou sendo construido ainda por favor espere um pouco até todas as informações estiverem completas
+
+Versão do documento V.1.1;
+Versão do sistema V.1.0
+
+Para rodar o sistema e fazer ele funcionar na aba 5 tem um passo a passo para iniciar o sistema
 
 GUIA PARA ENTENDER O PROJETO WHATSAPP-BOT-FLASK
 ===============================================
@@ -42,19 +47,19 @@ Processamento concluido → Nosso Servidor → Meta → WhatsApp → Usuário
 whatsapp-bot-flask/
 │
 ├── app.py
-│   Arquivo principal. Ele cria a aplicação Flask e registra as rotas.
+│   Arquivo principal. Ele cria a aplicação Flask e registra as rotas o coração do projeto onde entra a parte que fará o recebimento e envio de mensagens.
 │
 ├── config.py
-│   Arquivo de configuração. Carrega variáveis do arquivo .env (tokens, ID do número).
+│   Arquivo de configuração. Carrega variáveis do arquivo .env (tokens, ID do número) feito para manter encapsulado e mantido em segurança e melhor sintaxe.
 │
 ├── requirements.txt
 │   Lista de bibliotecas que o projeto precisa (Flask, requests, dotenv).
 │
 ├── .env
-│   Aqui ficam as chaves e tokens (não deve ser compartilhado publicamente).
+│   Aqui ficam as chaves e tokens (não deve ser compartilhado publicamente). peça para alguem do projeto passar a você o arquivo .env
 │
 ├── services/
-│   Pasta para serviços. Tem um arquivo chamado whatsapp_service.py que envia mensagens usando a API do WhatsApp.
+│   Pasta para serviços. Tem um arquivo chamado whatsapp_service.py que envia mensagens usando a API do WhatsApp. serve para encapsular o preceso e deixar os arquivos mais limpos e faceis de ler 
 │
 ├── routes/
 │   Pasta que guarda as rotas do nosso servidor. Tem um arquivo webhook_routes.py que define os endpoints:
@@ -79,4 +84,24 @@ PASSO A PASSO DO FLUXO:
 6. O usuário recebe a resposta no WhatsApp.
 
 ------------------------------------------------------------
+5) Como rodar o codigo
+------------------------------------------------------------
+Passo a Passo para rodar o sistema V.1.0
+
+1. tenha os arquivos em uma area de trabalho ou no VSCODE ou em um editor de texto preferivel
+2. abra os aquivos e certifique-se de ter as depedencias necessarias
+    2.1 se não tiver essas dependencias o proprio visual studio baixa com base no documento "requirements.txt"
+        2.1.1 caso o documento "requirements.txt" não ser reconhecido e não baixar as dependencias automaticamente você pode por meio do "pip install nome_da_dependencia" baixalas manualmente
+3. com todos os arquivos e dependencias necessarios, pode em um terminal do proprio visual studio ou de onde estiver, rodar o comando "python app.py" para rodar o flask
+4. rode o comando
+
+    "curl -X POST http://localhost:5000/webhook \
+    -H "Content-Type: application/json" \
+    -d @mock_message.json"
+
+Note que o comando está com espaçamento e "\" isso deve permancer na hora de colocar em seu bash para fazer o comando rodar corretamente o comando sem modifições está em "Area de Teste/Anotações.txt"
+ 
+em outro terminal para não haver mistura de comandos e lingugens no bash do VScode para simular uma mensagem via HTPP-Webhook que está em formato de JSON
+    4.1 caso queira modificar a mensagem a mesma estára em "mock_message.json" basta trocar os dados e valores e será enviado as novas informações
+
 PRONTO! Agora você entende a estrutura e o funcionamento do bot.
