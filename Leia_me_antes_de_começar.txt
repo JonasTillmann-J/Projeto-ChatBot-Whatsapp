@@ -1,0 +1,82 @@
+Estou sendo construido ainda por favor espere um pouco
+
+GUIA PARA ENTENDER O PROJETO WHATSAPP-BOT-FLASK
+===============================================
+
+Este documento foi criado para explicar, de forma simples e detalhada, como funciona a estrutura do projeto,
+o que cada pasta e arquivo faz, e como a API do WhatsApp entra nesse processo.
+
+------------------------------------------------------------
+1) O QUE É ESTE PROJETO?
+------------------------------------------------------------
+Este projeto é um BOT que responde automaticamente mensagens enviadas no WhatsApp, usando a API oficial da Meta (WhatsApp Cloud API).
+Ele está sendo feito em Python usando o framework Flask.
+
+A lógica é simples:
+- Quando alguém manda uma mensagem no WhatsApp, a Meta envia essa informação para o nosso servidor (Webhook).
+- Nosso código recebe essa informação, processa e responde automaticamente.
+
+------------------------------------------------------------
+2) COMO FUNCIONA A API DO WHATSAPP?
+------------------------------------------------------------
+A API funciona via requisições HTTP (GET e POST). Ela tem dois usos principais:
+
+1. ENVIAR mensagens → Fazemos uma chamada POST para o endpoint oficial da API.
+   Exemplo:
+   https://graph.facebook.com/v20.0/{PHONE_NUMBER_ID}/messages
+
+2. RECEBER mensagens → A Meta envia um POST para o nosso endpoint (Webhook) quando alguém manda mensagem no WhatsApp.
+
+Fluxo resumido:
+
+1. Fluxo de entrada de mensagem
+Usuário → WhatsApp → Meta → Nosso servidor → Processamento 
+
+2. Fluxo de Saida de mensagem
+Processamento concluido → Nosso Servidor → Meta → WhatsApp → Usuário 
+
+3. volta para o primeiro fluxo
+------------------------------------------------------------
+3) ESTRUTURA DO PROJETO
+------------------------------------------------------------
+whatsapp-bot-flask/
+│
+├── app.py
+│   Arquivo principal. Ele cria a aplicação Flask e registra as rotas.
+│
+├── config.py
+│   Arquivo de configuração. Carrega variáveis do arquivo .env (tokens, ID do número).
+│
+├── requirements.txt
+│   Lista de bibliotecas que o projeto precisa (Flask, requests, dotenv).
+│
+├── .env
+│   Aqui ficam as chaves e tokens (não deve ser compartilhado publicamente).
+│
+├── services/
+│   Pasta para serviços. Tem um arquivo chamado whatsapp_service.py que envia mensagens usando a API do WhatsApp.
+│
+├── routes/
+│   Pasta que guarda as rotas do nosso servidor. Tem um arquivo webhook_routes.py que define os endpoints:
+│   - GET /webhook → usado para verificação do Webhook (Meta precisa confirmar que o servidor é nosso).
+│   - POST /webhook → usado para receber mensagens do WhatsApp.
+│
+├── utils/
+│   Pasta com funções auxiliares. No arquivo parser.py, pegamos informações importantes do JSON enviado pelo WhatsApp.
+│
+└── README.md
+    Documento explicando como instalar e rodar o projeto.
+
+------------------------------------------------------------
+4) COMO NOSSO CÓDIGO FUNCIONA?
+------------------------------------------------------------
+PASSO A PASSO DO FLUXO:
+1. Um usuário manda mensagem no WhatsApp.
+2. A Meta envia essa mensagem (em formato JSON) para o nosso servidor na rota POST /webhook.
+3. O arquivo webhook_routes.py processa essa mensagem, usando a função extract_message do parser.py.
+4. Pegamos o número do usuário e a mensagem enviada.
+5. Chamamos a função send_message (em whatsapp_service.py) para responder via API do WhatsApp.
+6. O usuário recebe a resposta no WhatsApp.
+
+------------------------------------------------------------
+PRONTO! Agora você entende a estrutura e o funcionamento do bot.

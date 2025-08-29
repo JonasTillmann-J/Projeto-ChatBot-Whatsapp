@@ -1,0 +1,21 @@
+{
+  "entry": [
+    {
+      "changes": [
+        {
+          "value": {
+            "messages": [
+              {
+                "from": "5511999999999",
+                "id": "wamid.HBgM123456789",
+                "timestamp": "1690000000",
+                "text": { "body": "Olá mundo" },
+                "type": "text"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
